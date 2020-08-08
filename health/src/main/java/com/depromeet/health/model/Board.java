@@ -2,9 +2,7 @@ package com.depromeet.health.model;
 
 import com.depromeet.health.model.enums.ExerciseType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -23,6 +21,8 @@ public class Board {
 
     String title;
 
+    String content;
+
     String url;
 
     LocalDateTime createdAt;
@@ -35,8 +35,9 @@ public class Board {
     @JsonIgnore
     private User user;
 
-    public Board(String title, String url, LocalDateTime createdAt, ExerciseType type, User user) {
+    public Board(String title, String content, String url, LocalDateTime createdAt, ExerciseType type, User user) {
         this.title = title;
+        this.content = content;
         this.url = url;
         this.createdAt = createdAt;
         this.type = type;
@@ -45,6 +46,14 @@ public class Board {
 
     public Board() {
 
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Long getId() {
