@@ -6,10 +6,14 @@ import com.depromeet.health.model.User;
 import com.depromeet.health.model.enums.ExerciseType;
 import com.depromeet.health.payload.BoardRequest;
 import com.depromeet.health.repository.BoardRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class BoardService {
@@ -33,12 +37,18 @@ public class BoardService {
         return writer.getBoard();
     }
 
-    public List<Board> loadBoardByType(ExerciseType type) {
-        return boardRepository.findByType(type).orElse(new ArrayList<>());
+    @Transactional(readOnly = true)
+    public List<Board> loadBoardByType(ExerciseType type, Pageable pageable) {
+        Assert.notNull(pageable, "'pageable' must not be null");
+
+        return boardRepository.findByType(type, pageable).orElse(new ArrayList<>());
     }
 
-    public List<Board> loadAllBoard() {
-        return boardRepository.findAll();
+    @Transactional(readOnly = true)
+    public List<Board> loadAllBoard(Pageable pageable) {
+        Assert.notNull(pageable, "'pageable' must not be null");
+
+        return boardRepository.findAll(pageable).toList();
     }
 
     private User getUserByToken(String token) {
