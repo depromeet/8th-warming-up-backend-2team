@@ -40,12 +40,11 @@ public class BoardController extends AbstractController {
     public Response<List<Board>> getBoards(
             @RequestParam(value = "type", required = false) ExerciseType type,
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "20", required = false) int size,
-            @PageableDefault(sort="createdAt", direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(sort = "createdAt", size = 20, direction = Sort.Direction.DESC) Pageable pageable
     ) {
         List<Board> boards;
-        
-        if(type == null) {
+
+        if (type == null) {
             boards = boardService.loadAllBoard(pageable);
         } else {
             boards = boardService.loadBoardByType(type, pageable);
@@ -56,7 +55,7 @@ public class BoardController extends AbstractController {
     @GetMapping("board/my")
     public Response<List<Board>> getMyBoards(
             @RequestHeader(value = "TOKEN") String token
-    ){
+    ) {
         List<Board> boards = boardService.loadBoardByToken(token);
         return ok(boards);
     }
