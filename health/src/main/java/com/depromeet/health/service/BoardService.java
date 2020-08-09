@@ -28,7 +28,7 @@ public class BoardService {
 
     public Board insertUserByToken(String token, BoardRequest boardRequest) {
         User writer = getUserByToken(token);
-        Board board = new Board(boardRequest.getTitle(), boardRequest.getVimeoURL(), boardRequest.getCreatedAt(), boardRequest.getType(), writer);
+        Board board = new Board(boardRequest.getTitle(), boardRequest.getContent(), boardRequest.getVimeoURL(), boardRequest.getCreatedAt(), boardRequest.getType(), writer);
         return boardRepository.save(board);
     }
 
