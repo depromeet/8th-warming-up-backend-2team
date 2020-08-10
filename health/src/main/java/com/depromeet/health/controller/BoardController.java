@@ -39,7 +39,6 @@ public class BoardController extends AbstractController {
     @GetMapping("board")
     public Response<List<Board>> getBoards(
             @RequestParam(value = "type", required = false) ExerciseType type,
-            @RequestParam(value = "page", defaultValue = "0") int page,
             @PageableDefault(sort = "createdAt", size = 20, direction = Sort.Direction.DESC) Pageable pageable
     ) {
         List<Board> boards;

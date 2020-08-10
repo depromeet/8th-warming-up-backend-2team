@@ -27,3 +27,8 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+tasks.bootJar {
+    mainClassName = "com.depromeet.health.HealthApplication"
+    archiveFileName = "health.jar"
+}

@@ -1,5 +1,6 @@
 package com.depromeet.health.config.security;
 
+import com.depromeet.health.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -7,6 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Base64;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 public class JwtTokenProvider {
     private String secretKey = "harry";
 
+    @Qualifier("userService")
     @Autowired
     UserDetailsService userDetailsService;
 
