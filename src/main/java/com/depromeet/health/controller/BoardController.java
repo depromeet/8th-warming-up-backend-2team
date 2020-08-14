@@ -21,11 +21,6 @@ public class BoardController extends AbstractController {
     @Autowired
     BoardService boardService;
 
-    @GetMapping("test")
-    public String healthcheck() {
-        return "I'm alive";
-    }
-
     @PostMapping("board")
     public Response<String> addBoard(
             @RequestHeader(value = "TOKEN") String token,
