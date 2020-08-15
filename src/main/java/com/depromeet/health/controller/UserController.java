@@ -19,6 +19,7 @@ public class UserController extends AbstractController {
     @PostMapping("/login")
     public Response<String> login(@RequestBody Request<LoginRequest> request) {
         LoginRequest loginRequest = request.getData();
+        loginRequest.validateNotNull();
         User user = userService.loadUser(loginRequest);
         return ok(user.getToken());
     }
