@@ -1,5 +1,6 @@
 package com.depromeet.health.model;
 
+import com.depromeet.health.model.enums.GenderType;
 import com.depromeet.health.payload.LoginRequest;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,8 +32,31 @@ public class User implements UserDetails {
 
     private String name;
 
+    private String profile;
+
+    @Column(unique = true)
+    private String uid;
+
+    @Enumerated(EnumType.STRING)
+    private GenderType genderType;
+
+    private int yearsOfExercise;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
     private List<Board> board = new ArrayList<>();
+
+    public User() {
+
+    }
+
+    public User(LoginRequest request) {
+        this.email = request.getEmail();
+        this.name = request.getName();
+        this.profile = request.getProfile();
+        this.uid = request.getUid();
+        this.genderType = request.getGenderInSurveys();
+        this.yearsOfExercise = request.getYearsOfExerciseInSurveys();
+    }
 
     public List<Board> getBoard() {
         return board;
@@ -48,21 +74,12 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public User() {
-
-    }
-
     public String getToken() {
         return token;
     }
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public User(LoginRequest request) {
-        this.email = request.getEmail();
-        this.name = request.getName();
     }
 
     public Long getId() {
@@ -79,6 +96,38 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public GenderType getGenderType() {
+        return genderType;
+    }
+
+    public void setGenderType(GenderType genderType) {
+        this.genderType = genderType;
+    }
+
+    public int getYearsOfExercise() {
+        return yearsOfExercise;
+    }
+
+    public void setYearsOfExercise(int yearsOfExercise) {
+        this.yearsOfExercise = yearsOfExercise;
     }
 
     @Override
