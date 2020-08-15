@@ -1,17 +1,26 @@
 package com.depromeet.health.controller;
 
+import com.depromeet.health.exception.RequestNullPointerException;
+import com.depromeet.health.payload.ErrorResponse;
 import com.depromeet.health.payload.Response;
-import java.util.Map;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AbstractController {
-    protected Response<String> ok()  {
+    protected Response<String> ok() {
         return new Response<>("Success", true);
     }
 
-    protected <T> Response<T> ok(T data)  {
+    protected <T> Response<T> ok(T data) {
         return new Response<>("Message", true, data);
+    }
+
+    @ExceptionHandler(RequestNullPointerException.class)
+    public ResponseEntity<ErrorResponse> handlerException(RequestNullPointerException ex) {
+        ErrorResponse errorResponse = new ErrorResponse("Request Null Pointer Exception", "Request Null Pointer Exception", "You can add not null field");
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 }

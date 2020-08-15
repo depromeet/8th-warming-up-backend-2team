@@ -1,15 +1,13 @@
 package com.depromeet.health.payload;
 
+import com.depromeet.health.exception.RequestNullPointerException;
 import com.depromeet.health.model.enums.ExerciseType;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BoardRequest {
     @JsonProperty("title")
     String title;
@@ -62,5 +60,11 @@ public class BoardRequest {
 
     public void setType(ExerciseType type) {
         this.type = type;
+    }
+
+    public void validateNotNull() throws RequestNullPointerException {
+        if (this.title == null | this.content == null | this.vimeoURL == null | this.createdAt == null | this.type == null) {
+            throw new RequestNullPointerException();
+        }
     }
 }
