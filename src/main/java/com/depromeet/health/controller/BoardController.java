@@ -43,7 +43,6 @@ public class BoardController extends AbstractController {
             @PageableDefault(sort = "createdAt", size = 20, direction = Sort.Direction.DESC) Pageable pageable
     ) {
         List<Board> boards;
-
         if (type == null) {
             boards = boardService.loadAllBoard(pageable);
         } else {
