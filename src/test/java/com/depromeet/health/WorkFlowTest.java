@@ -1,5 +1,14 @@
 package com.depromeet.health;
 
+import com.depromeet.health.model.enums.ExerciseType;
+import com.depromeet.health.payload.BoardRequest;
+import com.depromeet.health.payload.LoginRequest;
+import com.depromeet.health.payload.Request;
+import com.depromeet.health.payload.Response;
+import com.depromeet.health.repository.UserRepository;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDateTime;
 import com.depromeet.health.payload.LoginRequest;
 import com.depromeet.health.payload.Request;
 import com.depromeet.health.payload.Response;
@@ -28,6 +37,9 @@ public class WorkFlowTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -63,4 +75,29 @@ public class WorkFlowTest {
         assertNotNull(token);
     }
 
+    @Test
+    @DisplayName("게시글 작성")
+    @Order(2)
+    public void writePostTest() throws Exception {
+        // given
+        loginTest();
+
+        BoardRequest boardRequest = new BoardRequest();
+        boardRequest.setTitle("제 데드 리프트 어떻습니까 형님들");
+        boardRequest.setContent("Hi");
+        boardRequest.setCreatedAt(LocalDateTime.now());
+        boardRequest.setType(ExerciseType.deadlift);
+        boardRequest.setVimeoURL("test");
+
+        Request<BoardRequest> request = new Request<>(boardRequest);
+
+
+        // when
+        mockMvc.perform(post("/api/board")
+                .header("TOKEN", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 }
