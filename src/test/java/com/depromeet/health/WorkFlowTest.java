@@ -9,6 +9,11 @@ import com.depromeet.health.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
+import com.depromeet.health.payload.LoginRequest;
+import com.depromeet.health.payload.Request;
+import com.depromeet.health.payload.Response;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -95,5 +100,4 @@ public class WorkFlowTest {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
-
 }
