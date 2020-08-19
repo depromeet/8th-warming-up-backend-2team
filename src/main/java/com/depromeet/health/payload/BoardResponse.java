@@ -1,6 +1,6 @@
 package com.depromeet.health.payload;
 
-import com.depromeet.health.exception.RequestNullPointerException;
+import com.depromeet.health.model.Board;
 import com.depromeet.health.model.enums.ExerciseType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-public class BoardRequest {
+public class BoardResponse {
     @JsonProperty("title")
     String title;
 
@@ -28,12 +28,21 @@ public class BoardRequest {
     @JsonProperty("weight")
     Long weight;
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+    @JsonProperty("name")
+    String name;
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    @JsonProperty("profile")
+    String profile;
+
+    public BoardResponse(Board board) {
+        this.title = board.getTitle();
+        this.content = board.getContent();
+        this.vimeoURL = board.getUrl();
+        this.createdAt = board.getCreatedAt();
+        this.type = board.getType();
+        this.weight = board.getWeight();
+        this.name = board.getUser().getName();
+        this.profile = board.getUser().getProfile();
     }
 
     public String getTitle() {
@@ -60,6 +69,14 @@ public class BoardRequest {
         this.vimeoURL = vimeoURL;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public ExerciseType getType() {
         return type;
     }
@@ -76,9 +93,19 @@ public class BoardRequest {
         this.weight = weight;
     }
 
-    public void validateNotNull() throws RequestNullPointerException {
-        if (this.title == null | this.content == null | this.vimeoURL == null | this.createdAt == null | this.weight == null | this.type == null) {
-            throw new RequestNullPointerException();
-        }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 }

@@ -1,6 +1,5 @@
 package com.depromeet.health.config.security;
 
-import com.depromeet.health.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -20,11 +19,10 @@ import javax.servlet.http.HttpServletRequest;
 
 @Component
 public class JwtTokenProvider {
-    private String secretKey = "harry";
-
-    @Qualifier("userService")
+    @Qualifier("userServiceImpl")
     @Autowired
     UserDetailsService userDetailsService;
+    private String secretKey = "harry";
 
     @PostConstruct
     protected void init() {
