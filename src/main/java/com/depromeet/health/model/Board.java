@@ -30,17 +30,20 @@ public class Board {
     @Enumerated(EnumType.STRING)
     ExerciseType type;
 
+    Long weight;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 
-    public Board(String title, String content, String url, LocalDateTime createdAt, ExerciseType type, User user) {
+    public Board(String title, String content, String url, LocalDateTime createdAt, ExerciseType type, Long weight, User user) {
         this.title = title;
         this.content = content;
         this.url = url;
         this.createdAt = createdAt;
         this.type = type;
+        this.weight = weight;
         this.user = user;
     }
 
@@ -102,5 +105,13 @@ public class Board {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Long getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Long weight) {
+        this.weight = weight;
     }
 }
