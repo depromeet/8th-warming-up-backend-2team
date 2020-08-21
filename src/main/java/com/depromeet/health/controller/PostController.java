@@ -65,9 +65,9 @@ public class PostController extends AbstractController {
         return ok(posts);
     }
 
-    @GetMapping("post/{id}")
+    @GetMapping("post/{post_id}")
     public Response<PostResponse> getPost(
-            @PathVariable("id") Long postId
+            @PathVariable("post_id") Long postId
     ) {
         Post post = postService.readPost(postId);
         Boolean isEvaluated = evaluateService.isEvaluatePost(post.getUser().getId(), postId);
@@ -75,9 +75,9 @@ public class PostController extends AbstractController {
         return ok(postResponse);
     }
 
-    @PatchMapping("post/up/{id}")
+    @PatchMapping("post/up/{post_id}")
     public Response<PostResponse> evaluatePostAsGood(
-            @PathVariable("id") Long postId
+            @PathVariable("post_id") Long postId
     ) {
         Post post = postService.updatePostAsGood(postId);
         evaluateService.createEvaluate(post.getUser().getId(), postId);
@@ -85,9 +85,9 @@ public class PostController extends AbstractController {
         return ok(postResponse);
     }
 
-    @PatchMapping("post/down/{id}")
+    @PatchMapping("post/down/{post_id}")
     public Response<PostResponse> evaluatePostAsBad(
-            @PathVariable("id") Long postId
+            @PathVariable("post_id") Long postId
     ) {
         Post post = postService.updatePostAsBad(postId);
         evaluateService.createEvaluate(post.getUser().getId(), postId);
