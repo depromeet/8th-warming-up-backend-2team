@@ -1,6 +1,7 @@
 package com.depromeet.health.controller;
 
 import com.depromeet.health.exception.RequestNullPointerException;
+import com.depromeet.health.exception.ResponseNullPointerException;
 import com.depromeet.health.payload.ErrorResponse;
 import com.depromeet.health.payload.Response;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,12 @@ public class AbstractController {
     @ExceptionHandler(RequestNullPointerException.class)
     public ResponseEntity<ErrorResponse> handlerException(RequestNullPointerException ex) {
         ErrorResponse errorResponse = new ErrorResponse("Request Null Pointer Exception", "Request Null Pointer Exception", "You can add not null field");
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ResponseNullPointerException.class)
+    public ResponseEntity<ErrorResponse> handlerException(ResponseNullPointerException ex) {
+        ErrorResponse errorResponse = new ErrorResponse("Response Null Pointer Exception", "Rest Template can't get response", "API Request is rejected");
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 }

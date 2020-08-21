@@ -8,15 +8,15 @@ import java.time.LocalDateTime;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-public class BoardRequest {
+public class PostRequest {
     @JsonProperty("title")
     String title;
 
     @JsonProperty("content")
     String content;
 
-    @JsonProperty("vimeoURL")
-    String vimeoURL;
+    @JsonProperty("vimeoId")
+    Long vimeoId;
 
     @JsonProperty("createdAt")
     LocalDateTime createdAt;
@@ -27,6 +27,9 @@ public class BoardRequest {
 
     @JsonProperty("weight")
     Long weight;
+
+    @JsonProperty("playTime")
+    Long playTime;
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -52,12 +55,12 @@ public class BoardRequest {
         this.content = content;
     }
 
-    public String getVimeoURL() {
-        return vimeoURL;
+    public Long getVimeoId() {
+        return vimeoId;
     }
 
-    public void setVimeoURL(String vimeoURL) {
-        this.vimeoURL = vimeoURL;
+    public void setVimeoId(Long vimeoId) {
+        this.vimeoId = vimeoId;
     }
 
     public ExerciseType getType() {
@@ -76,8 +79,16 @@ public class BoardRequest {
         this.weight = weight;
     }
 
+    public Long getPlayTime() {
+        return playTime;
+    }
+
+    public void setPlayTime(Long playTime) {
+        this.playTime = playTime;
+    }
+
     public void validateNotNull() throws RequestNullPointerException {
-        if (this.title == null | this.content == null | this.vimeoURL == null | this.createdAt == null | this.weight == null | this.type == null) {
+        if (this.title == null | this.content == null | this.vimeoId == null | this.createdAt == null | this.weight == null | this.type == null | this.playTime == null) {
             throw new RequestNullPointerException();
         }
     }

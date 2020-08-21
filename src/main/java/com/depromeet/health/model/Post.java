@@ -1,6 +1,9 @@
 package com.depromeet.health.model;
 
 import com.depromeet.health.model.enums.ExerciseType;
+import com.depromeet.health.payload.PostRequest;
+import com.depromeet.health.util.TimeUtil;
+import com.depromeet.health.util.VimeoUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 
@@ -14,7 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Board {
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +26,7 @@ public class Board {
 
     String content;
 
-    String url;
+    Long vimeoId;
 
     LocalDateTime createdAt;
 
@@ -32,23 +35,34 @@ public class Board {
 
     Long weight;
 
+    String thumbnail;
+
+    String playTime;
+
+    Long goodCount;
+
+    Long badCount;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 
-    public Board(String title, String content, String url, LocalDateTime createdAt, ExerciseType type, Long weight, User user) {
-        this.title = title;
-        this.content = content;
-        this.url = url;
-        this.createdAt = createdAt;
-        this.type = type;
-        this.weight = weight;
-        this.user = user;
+    public Post() {
     }
 
-    public Board() {
-
+    public Post(PostRequest postRequest, User writer) {
+        this.title = postRequest.getTitle();
+        this.content = postRequest.getContent();
+        this.vimeoId = postRequest.getVimeoId();
+        this.createdAt = postRequest.getCreatedAt();
+        this.type = postRequest.getType();
+        this.weight = postRequest.getWeight();
+        this.thumbnail = VimeoUtil.extractThumbnailFromVimeoVideo(postRequest.getVimeoId());
+        this.playTime = TimeUtil.convertMillisecondToMinuteSecond(postRequest.getPlayTime());
+        this.goodCount = 0L;
+        this.badCount = 0L;
+        this.user = writer;
     }
 
     public String getContent() {
@@ -99,19 +113,51 @@ public class Board {
         this.user = user;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public Long getWeight() {
         return weight;
     }
 
     public void setWeight(Long weight) {
         this.weight = weight;
+    }
+
+    public Long getVimeoId() {
+        return vimeoId;
+    }
+
+    public void setVimeoId(Long vimeoId) {
+        this.vimeoId = vimeoId;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public String getPlayTime() {
+        return playTime;
+    }
+
+    public void setPlayTime(String playTime) {
+        this.playTime = playTime;
+    }
+
+    public Long getGoodCount() {
+        return goodCount;
+    }
+
+    public void setGoodCount(Long goodCount) {
+        this.goodCount = goodCount;
+    }
+
+    public Long getBadCount() {
+        return badCount;
+    }
+
+    public void setBadCount(Long badCount) {
+        this.badCount = badCount;
     }
 }

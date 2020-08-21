@@ -34,7 +34,7 @@ public class User implements UserDetails {
     private String uid;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Board> board = new ArrayList<>();
+    private List<Post> post = new ArrayList<>();
 
     public User() {
 
@@ -47,12 +47,12 @@ public class User implements UserDetails {
         this.uid = request.getUid();
     }
 
-    public List<Board> getBoard() {
-        return board;
+    public List<Post> getPost() {
+        return post;
     }
 
-    public void setBoard(List<Board> board) {
-        this.board = board;
+    public void setPost(List<Post> post) {
+        this.post = post;
     }
 
     public String getName() {

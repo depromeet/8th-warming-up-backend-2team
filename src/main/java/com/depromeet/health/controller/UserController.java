@@ -20,7 +20,7 @@ public class UserController extends AbstractController {
     public Response<String> login(@RequestBody Request<LoginRequest> request) {
         LoginRequest loginRequest = request.getData();
         loginRequest.validateNotNull();
-        User user = userService.loadUser(loginRequest);
+        User user = userService.readUser(loginRequest);
         return ok(user.getToken());
     }
 }
