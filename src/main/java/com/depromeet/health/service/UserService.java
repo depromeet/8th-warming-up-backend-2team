@@ -5,5 +5,5 @@ import com.depromeet.health.payload.LoginRequest;
 
 public interface UserService {
 
-    User loadUser(LoginRequest request);
+    User readUser(LoginRequest request);
 }

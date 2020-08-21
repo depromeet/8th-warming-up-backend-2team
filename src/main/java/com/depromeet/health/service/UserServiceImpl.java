@@ -28,12 +28,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public User loadUser(LoginRequest request) throws UsernameNotFoundException {
+    public User readUser(LoginRequest request) throws UsernameNotFoundException {
         Optional<User> foundUser = userRepository.findByEmail(request.getEmail());
-        return foundUser.orElseGet(() -> insertUser(request));
+        return foundUser.orElseGet(() -> createUser(request));
     }
 
-    private User insertUser(LoginRequest request) {
+    private User createUser(LoginRequest request) {
         User user = new User(request);
         String token = jwtTokenProvider.createToken(user.getEmail());
         user.setToken(token);

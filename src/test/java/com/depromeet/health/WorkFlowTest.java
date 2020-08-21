@@ -1,8 +1,8 @@
 package com.depromeet.health;
 
 import com.depromeet.health.model.enums.ExerciseType;
-import com.depromeet.health.payload.BoardRequest;
 import com.depromeet.health.payload.LoginRequest;
+import com.depromeet.health.payload.PostRequest;
 import com.depromeet.health.payload.Request;
 import com.depromeet.health.payload.Response;
 import com.depromeet.health.repository.UserRepository;
@@ -77,19 +77,20 @@ public class WorkFlowTest {
         // given
         loginTest();
 
-        BoardRequest boardRequest = new BoardRequest();
-        boardRequest.setTitle("제 데드 리프트 어떻습니까 형님들");
-        boardRequest.setContent("Hi");
-        boardRequest.setCreatedAt(LocalDateTime.now());
-        boardRequest.setType(ExerciseType.deadlift);
-        boardRequest.setVimeoURL("test");
-        boardRequest.setWeight(300L);
+        PostRequest postRequest = new PostRequest();
+        postRequest.setTitle("제 데드 리프트 어떻습니까 형님들");
+        postRequest.setContent("Hi");
+        postRequest.setCreatedAt(LocalDateTime.now());
+        postRequest.setType(ExerciseType.deadlift);
+        postRequest.setVimeoId(1234L);
+        postRequest.setWeight(300L);
+        postRequest.setPlayTime(324234L);
 
-        Request<BoardRequest> request = new Request<>(boardRequest);
+        Request<PostRequest> request = new Request<>(postRequest);
 
 
         // when
-        mockMvc.perform(post("/api/board")
+        mockMvc.perform(post("/api/post")
                 .header("TOKEN", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
