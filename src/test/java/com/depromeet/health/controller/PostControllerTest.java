@@ -26,7 +26,7 @@ public class PostControllerTest extends TestBase {
         postRequest.setContent("Hi");
         postRequest.setType(ExerciseType.deadlift);
         postRequest.setVimeoId(1234L);
-        postRequest.setWeight(300L);
+        postRequest.setWeight(150L);
         postRequest.setPlayTime(324234L);
 
         Request<PostRequest> request = new Request<>(postRequest);
