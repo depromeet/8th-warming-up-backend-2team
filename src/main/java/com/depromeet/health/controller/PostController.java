@@ -1,6 +1,7 @@
 package com.depromeet.health.controller;
 
 import com.depromeet.health.model.Post;
+import com.depromeet.health.model.enums.EvaluateType;
 import com.depromeet.health.model.enums.ExerciseType;
 import com.depromeet.health.payload.PostRequest;
 import com.depromeet.health.payload.PostResponse;
@@ -75,21 +76,12 @@ public class PostController extends AbstractController {
         return ok(postResponse);
     }
 
-    @PatchMapping("post/up/{post_id}")
-    public Response<PostResponse> evaluatePostAsGood(
-            @PathVariable("post_id") Long postId
+    @PatchMapping("post/{post_id}")
+    public Response<PostResponse> evaluatePost(
+            @PathVariable("post_id") Long postId,
+            @RequestParam("type") EvaluateType evaluateType
     ) {
-        Post post = postService.updatePostAsGood(postId);
-        evaluateService.createEvaluate(post.getUser().getId(), postId);
-        PostResponse postResponse = new PostResponse(post);
-        return ok(postResponse);
-    }
-
-    @PatchMapping("post/down/{post_id}")
-    public Response<PostResponse> evaluatePostAsBad(
-            @PathVariable("post_id") Long postId
-    ) {
-        Post post = postService.updatePostAsBad(postId);
+        Post post = postService.updatePostByEvaluateType(postId, evaluateType);
         evaluateService.createEvaluate(post.getUser().getId(), postId);
         PostResponse postResponse = new PostResponse(post);
         return ok(postResponse);

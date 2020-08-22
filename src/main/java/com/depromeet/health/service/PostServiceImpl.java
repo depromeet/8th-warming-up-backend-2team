@@ -4,6 +4,7 @@ import com.depromeet.health.config.security.JwtTokenProvider;
 import com.depromeet.health.exception.RequestNullPointerException;
 import com.depromeet.health.model.Post;
 import com.depromeet.health.model.User;
+import com.depromeet.health.model.enums.EvaluateType;
 import com.depromeet.health.model.enums.ExerciseType;
 import com.depromeet.health.payload.PostRequest;
 import com.depromeet.health.repository.PostRepository;
@@ -60,16 +61,16 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post updatePostAsGood(Long id) {
+    public Post updatePostByEvaluateType(Long id, EvaluateType type) {
         Post post = readPost(id);
-        post.setGoodCount(post.getGoodCount() + 1);
-        return postRepository.save(post);
-    }
-
-    @Override
-    public Post updatePostAsBad(Long id) {
-        Post post = readPost(id);
-        post.setBadCount(post.getBadCount() + 1);
+        switch (type) {
+            case up:
+                post.setGoodCount(post.getGoodCount() + 1);
+                break;
+            case down:
+                post.setBadCount(post.getBadCount() + 1);
+                break;
+        }
         return postRepository.save(post);
     }
 }

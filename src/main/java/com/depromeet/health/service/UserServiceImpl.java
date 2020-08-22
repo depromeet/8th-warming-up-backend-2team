@@ -3,6 +3,7 @@ package com.depromeet.health.service;
 
 import com.depromeet.health.config.security.JwtTokenProvider;
 import com.depromeet.health.model.User;
+import com.depromeet.health.model.enums.WeightType;
 import com.depromeet.health.payload.LoginRequest;
 import com.depromeet.health.repository.UserRepository;
 import java.util.Optional;
@@ -40,4 +41,21 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userRepository.save(user);
     }
 
+    @Override
+    public User readWeight(String token, WeightType weightType) {
+        User user = readUserByToken(token);
+
+        switch (weightType) {
+            case max:
+
+                break;
+            default:
+        }
+        return null;
+    }
+
+    private User readUserByToken(String token) {
+        String userPk = jwtTokenProvider.getUserPk(token);
+        return (User) loadUserByUsername(userPk);
+    }
 }

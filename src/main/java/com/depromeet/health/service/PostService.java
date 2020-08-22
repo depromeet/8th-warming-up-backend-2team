@@ -1,6 +1,7 @@
 package com.depromeet.health.service;
 
 import com.depromeet.health.model.Post;
+import com.depromeet.health.model.enums.EvaluateType;
 import com.depromeet.health.model.enums.ExerciseType;
 import com.depromeet.health.payload.PostRequest;
 import java.util.List;
@@ -16,7 +17,5 @@ public interface PostService {
 
     List<Post> readPostByToken(String token, Pageable pageable);
 
-    Post updatePostAsGood(Long id);
-
-    Post updatePostAsBad(Long id);
+    Post updatePostByEvaluateType(Long id, EvaluateType type);
 }
