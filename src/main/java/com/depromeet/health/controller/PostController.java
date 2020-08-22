@@ -53,8 +53,8 @@ public class PostController extends AbstractController {
             @PageableDefault(sort = "createdAt", size = 20, direction = Sort.Direction.DESC) Pageable pageable
     ) {
         List<Post> posts = postService.readPosts(type, token, pageable);
-        List<PostResponse> postRespons = posts.stream().map(PostResponse::new).collect(Collectors.toList());
-        return ok(postRespons);
+        List<PostResponse> postResponses = posts.stream().map(PostResponse::new).collect(Collectors.toList());
+        return ok(postResponses);
     }
 
     @GetMapping("post/my")

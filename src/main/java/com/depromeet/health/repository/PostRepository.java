@@ -16,6 +16,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Optional<List<Post>> findByUserId(Long id, Pageable pageable);
 
-    @Query(value = "select max(weight) from post where user_id=:id and post.type=:type order by post.weight desc;", nativeQuery = true)
+    @Query(value = "select max(weight) from post where user_id=:id and post.type=:type", nativeQuery = true)
     Optional<Long> findOneByUserIdAndTypeOrderByWeightDesc(@Param("id") Long id, @Param("type") String type);
 }
