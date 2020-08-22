@@ -55,7 +55,7 @@ public class Post {
         this.title = postRequest.getTitle();
         this.content = postRequest.getContent();
         this.vimeoId = postRequest.getVimeoId();
-        this.createdAt = postRequest.getCreatedAt();
+        this.createdAt = LocalDateTime.now();
         this.type = postRequest.getType();
         this.weight = postRequest.getWeight();
         this.thumbnail = VimeoUtil.extractThumbnailFromVimeoVideo(postRequest.getVimeoId());
