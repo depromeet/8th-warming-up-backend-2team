@@ -10,6 +10,7 @@ import com.depromeet.health.payload.PostRequest;
 import com.depromeet.health.repository.PostRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -72,5 +73,11 @@ public class PostServiceImpl implements PostService {
                 break;
         }
         return postRepository.save(post);
+    }
+
+    @Override
+    public Long readMaxWeight(Long userId, ExerciseType exerciseType) {
+        Optional<Long> postByMaxWeight = postRepository.findOneByUserIdAndTypeOrderByWeightDesc(userId, exerciseType.name());
+        return postByMaxWeight.orElse(null);
     }
 }

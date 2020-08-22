@@ -18,4 +18,6 @@ public interface PostService {
     List<Post> readPostByToken(String token, Pageable pageable);
 
     Post updatePostByEvaluateType(Long id, EvaluateType type);
+
+    Long readMaxWeight(Long userId, ExerciseType exerciseType);
 }

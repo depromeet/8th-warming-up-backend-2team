@@ -3,8 +3,10 @@ package com.depromeet.health.service;
 
 import com.depromeet.health.config.security.JwtTokenProvider;
 import com.depromeet.health.model.User;
+import com.depromeet.health.model.enums.ExerciseType;
 import com.depromeet.health.model.enums.WeightType;
 import com.depromeet.health.payload.LoginRequest;
+import com.depromeet.health.payload.WeightResponse;
 import com.depromeet.health.repository.UserRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    PostService postService;
 
     @Autowired
     JwtTokenProvider jwtTokenProvider;
@@ -42,16 +47,22 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public User readWeight(String token, WeightType weightType) {
+    public WeightResponse readWeight(String token, WeightType weightType) {
         User user = readUserByToken(token);
+        Long deadLiftWeight = null;
+        Long benchWeight = null;
+        Long squatWeight = null;
 
         switch (weightType) {
             case max:
-
+                deadLiftWeight = postService.readMaxWeight(user.getId(), ExerciseType.deadlift);
+                benchWeight = postService.readMaxWeight(user.getId(), ExerciseType.bench);
+                squatWeight = postService.readMaxWeight(user.getId(), ExerciseType.squat);
                 break;
             default:
         }
-        return null;
+
+        return new WeightResponse(deadLiftWeight, benchWeight, squatWeight);
     }
 
     private User readUserByToken(String token) {

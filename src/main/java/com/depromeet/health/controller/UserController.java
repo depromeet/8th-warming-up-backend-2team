@@ -34,6 +34,7 @@ public class UserController extends AbstractController {
             @RequestHeader(value = "TOKEN") String token,
             @RequestParam(value = "type") WeightType type
     ) {
-        
+        WeightResponse weightResponse = userService.readWeight(token, type);
+        return ok(weightResponse);
     }
 }
