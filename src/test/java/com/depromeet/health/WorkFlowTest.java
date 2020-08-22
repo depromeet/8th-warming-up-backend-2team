@@ -8,7 +8,6 @@ import com.depromeet.health.payload.Response;
 import com.depromeet.health.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -80,7 +79,6 @@ public class WorkFlowTest {
         PostRequest postRequest = new PostRequest();
         postRequest.setTitle("제 데드 리프트 어떻습니까 형님들");
         postRequest.setContent("Hi");
-        postRequest.setCreatedAt(LocalDateTime.now());
         postRequest.setType(ExerciseType.deadlift);
         postRequest.setVimeoId(1234L);
         postRequest.setWeight(300L);

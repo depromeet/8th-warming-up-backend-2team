@@ -3,7 +3,6 @@ package com.depromeet.health.payload;
 import com.depromeet.health.exception.RequestNullPointerException;
 import com.depromeet.health.model.enums.ExerciseType;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.time.LocalDateTime;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -18,9 +17,6 @@ public class PostRequest {
     @JsonProperty("vimeoId")
     Long vimeoId;
 
-    @JsonProperty("createdAt")
-    LocalDateTime createdAt;
-
     @JsonProperty("type")
     @Enumerated(EnumType.STRING)
     ExerciseType type;
@@ -30,14 +26,6 @@ public class PostRequest {
 
     @JsonProperty("playTime")
     Long playTime;
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 
     public String getTitle() {
         return title;
@@ -88,7 +76,7 @@ public class PostRequest {
     }
 
     public void validateNotNull() throws RequestNullPointerException {
-        if (this.title == null | this.content == null | this.vimeoId == null | this.createdAt == null | this.weight == null | this.type == null | this.playTime == null) {
+        if (this.title == null | this.content == null | this.vimeoId == null | this.weight == null | this.type == null | this.playTime == null) {
             throw new RequestNullPointerException();
         }
     }
