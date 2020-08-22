@@ -4,11 +4,13 @@ import com.depromeet.health.config.security.JwtTokenProvider;
 import com.depromeet.health.exception.RequestNullPointerException;
 import com.depromeet.health.model.Post;
 import com.depromeet.health.model.User;
+import com.depromeet.health.model.enums.EvaluateType;
 import com.depromeet.health.model.enums.ExerciseType;
 import com.depromeet.health.payload.PostRequest;
 import com.depromeet.health.repository.PostRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -60,16 +62,22 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post updatePostAsGood(Long id) {
+    public Post updatePostByEvaluateType(Long id, EvaluateType type) {
         Post post = readPost(id);
-        post.setGoodCount(post.getGoodCount() + 1);
+        switch (type) {
+            case up:
+                post.setGoodCount(post.getGoodCount() + 1);
+                break;
+            case down:
+                post.setBadCount(post.getBadCount() + 1);
+                break;
+        }
         return postRepository.save(post);
     }
 
     @Override
-    public Post updatePostAsBad(Long id) {
-        Post post = readPost(id);
-        post.setBadCount(post.getBadCount() + 1);
-        return postRepository.save(post);
+    public Long readMaxWeight(Long userId, ExerciseType exerciseType) {
+        Optional<Long> postByMaxWeight = postRepository.findOneByUserIdAndTypeOrderByWeightDesc(userId, exerciseType.name());
+        return postByMaxWeight.orElse(null);
     }
 }
