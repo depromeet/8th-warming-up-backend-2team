@@ -83,7 +83,7 @@ public class PostController extends AbstractController {
     ) {
         Post post = postService.updatePostByEvaluateType(postId, evaluateType);
         evaluateService.createEvaluate(post.getUser().getId(), postId);
-        PostResponse postResponse = new PostResponse(post);
+        PostResponse postResponse = new PostResponse(post, true);
         return ok(postResponse);
     }
 }
