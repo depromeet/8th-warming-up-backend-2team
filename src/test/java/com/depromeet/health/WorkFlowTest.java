@@ -18,6 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.transaction.Transactional;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -72,6 +74,7 @@ public class WorkFlowTest {
     @Test
     @DisplayName("게시글 작성")
     @Order(2)
+    @Transactional
     public void writePostTest() throws Exception {
         // given
         loginTest();
