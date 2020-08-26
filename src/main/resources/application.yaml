@@ -11,3 +11,5 @@ spring:
       minimum-idle: 10
       idle-timeout: 30000
       connection-test-query: "SELECT 1"
+
+thumbnail: "https://i.vimeocdn.com/video/default_640x360?r=pad"

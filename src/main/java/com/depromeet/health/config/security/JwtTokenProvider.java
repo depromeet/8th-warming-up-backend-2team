@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Component
 public class JwtTokenProvider {
-    @Qualifier("userServiceImpl")
+    @Qualifier("userService")
     @Autowired
     UserDetailsService userDetailsService;
     private String secretKey = "harry";
