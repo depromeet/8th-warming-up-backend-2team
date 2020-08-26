@@ -39,7 +39,7 @@ public abstract class TestBase {
     @Autowired
     protected ObjectMapper objectMapper;
 
-    @Qualifier("userServiceImpl")
+    @Qualifier("userService")
     @Autowired
     UserDetailsService userDetailsService;
 

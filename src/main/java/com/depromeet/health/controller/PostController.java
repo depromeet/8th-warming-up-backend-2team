@@ -12,13 +12,16 @@ import com.depromeet.health.service.PostService;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +37,9 @@ public class PostController extends AbstractController {
 
     @Autowired
     EvaluateService evaluateService;
+
+    @Value("${thumbnail}")
+    String DEFAULT_THUMBNAIL;
 
     @PostMapping("post")
     public Response<String> writePost(
@@ -52,9 +58,28 @@ public class PostController extends AbstractController {
             @RequestParam(value = "type", required = false) ExerciseType type,
             @PageableDefault(sort = "createdAt", size = 20, direction = Sort.Direction.DESC) Pageable pageable
     ) {
+
         List<Post> posts = postService.readPosts(type, token, pageable);
         List<PostResponse> postResponses = posts.stream().map(PostResponse::new).collect(Collectors.toList());
         return ok(postResponses);
+    }
+
+    @DeleteMapping("post/{id}")
+    public Response<String> deletePost(
+            @PathVariable("id") Long postId) {
+        postService.deletePost(postId);
+        return ok();
+    }
+
+    @PutMapping("post/{id}")
+    public Response<String> updatePost(
+            @RequestHeader(value = "TOKEN") String token,
+            @PathVariable("id") Long postId,
+            @RequestBody Request<PostRequest> request) {
+        PostRequest postRequest = request.getData();
+        postRequest.validateNotNull();
+        postService.updatePost(postId, token, postRequest);
+        return ok();
     }
 
     @GetMapping("post/my")
