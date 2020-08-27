@@ -27,6 +27,9 @@ public class PostRequest {
     @JsonProperty("playTime")
     Long playTime;
 
+    @JsonProperty("thumbnail")
+    private String thumbnail;
+
     public String getTitle() {
         return title;
     }
@@ -76,8 +79,16 @@ public class PostRequest {
     }
 
     public void validateNotNull() throws RequestNullPointerException {
-        if (this.title == null | this.content == null | this.vimeoId == null | this.weight == null | this.type == null | this.playTime == null) {
+        if (this.title == null | this.content == null | this.vimeoId == null | this.weight == null | this.type == null | this.playTime == null | this.thumbnail == null) {
             throw new RequestNullPointerException();
         }
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }
