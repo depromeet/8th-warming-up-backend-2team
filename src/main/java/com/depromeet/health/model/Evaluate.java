@@ -1,10 +1,12 @@
 package com.depromeet.health.model;
 
+import java.io.Serializable;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
 @Entity
-public class Evaluate {
+public class Evaluate implements Serializable {
     @EmbeddedId
     EvaluateId id;
 

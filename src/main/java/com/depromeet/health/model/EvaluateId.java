@@ -1,6 +1,7 @@
 package com.depromeet.health.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Embeddable;
 
@@ -32,5 +33,19 @@ public class EvaluateId implements Serializable {
 
     public void setPostId(Long postId) {
         this.postId = postId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EvaluateId that = (EvaluateId) o;
+        return Objects.equals(userId, that.userId) &&
+                Objects.equals(postId, that.postId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, postId);
     }
 }
