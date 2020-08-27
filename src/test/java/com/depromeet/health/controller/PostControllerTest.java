@@ -29,7 +29,6 @@ public class PostControllerTest extends TestBase {
         postRequest.setWeight(150L);
         postRequest.setPlayTime(324234L);
         postRequest.setThumbnail("test");
-
         Request<PostRequest> request = new Request<>(postRequest);
 
         // when, then
