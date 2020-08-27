@@ -1,6 +1,7 @@
 package com.depromeet.health.service;
 
 import com.depromeet.health.config.security.JwtTokenProvider;
+import com.depromeet.health.exception.AlreadyEvaluatedUserException;
 import com.depromeet.health.exception.RequestNullPointerException;
 import com.depromeet.health.model.Post;
 import com.depromeet.health.model.User;
@@ -26,6 +27,9 @@ public class PostService {
 
     @Autowired
     JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    EvaluateService evaluateService;
 
     public Post createUserByToken(String token, PostRequest postRequest) {
         User writer = readUserByToken(token);
@@ -57,8 +61,13 @@ public class PostService {
         return (User) userService.loadUserByUsername(userPk);
     }
 
-    public Post updatePostByEvaluateType(Long id, EvaluateType type) {
+    public Post updatePostByEvaluateType(Long id, EvaluateType type) throws AlreadyEvaluatedUserException {
         Post post = readPost(id);
+
+        if (evaluateService.isEvaluatePost(post.getUser().getId(), post.getId())) {
+            throw new AlreadyEvaluatedUserException();
+        }
+
         switch (type) {
             case up:
                 post.setGoodCount(post.getGoodCount() + 1);

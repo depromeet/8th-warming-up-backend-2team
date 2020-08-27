@@ -1,5 +1,6 @@
 package com.depromeet.health.controller;
 
+import com.depromeet.health.exception.AlreadyEvaluatedUserException;
 import com.depromeet.health.exception.RequestNullPointerException;
 import com.depromeet.health.exception.ResponseNullPointerException;
 import com.depromeet.health.payload.ErrorResponse;
@@ -28,6 +29,12 @@ public class AbstractController {
     @ExceptionHandler(ResponseNullPointerException.class)
     public ResponseEntity<ErrorResponse> handlerException(ResponseNullPointerException ex) {
         ErrorResponse errorResponse = new ErrorResponse("Response Null Pointer Exception", "Rest Template can't get response", "API Request is rejected");
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AlreadyEvaluatedUserException.class)
+    public ResponseEntity<ErrorResponse> handlerException(AlreadyEvaluatedUserException ex) {
+        ErrorResponse errorResponse = new ErrorResponse("This User already evaluated this post", "evaluated exception", "check your user id and post id");
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 }
