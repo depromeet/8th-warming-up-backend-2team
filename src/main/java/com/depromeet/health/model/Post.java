@@ -3,7 +3,6 @@ package com.depromeet.health.model;
 import com.depromeet.health.model.enums.ExerciseType;
 import com.depromeet.health.payload.PostRequest;
 import com.depromeet.health.util.TimeUtil;
-import com.depromeet.health.util.VimeoUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 
@@ -58,7 +57,7 @@ public class Post {
         this.createdAt = LocalDateTime.now();
         this.type = postRequest.getType();
         this.weight = postRequest.getWeight();
-        this.thumbnail = VimeoUtil.extractThumbnailFromVimeoVideo(postRequest.getVimeoId());
+        this.thumbnail = postRequest.getThumbnail();
         this.playTime = TimeUtil.convertMillisecondToMinuteSecond(postRequest.getPlayTime());
         this.goodCount = 0L;
         this.badCount = 0L;

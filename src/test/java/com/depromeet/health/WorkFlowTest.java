@@ -86,6 +86,7 @@ public class WorkFlowTest {
         postRequest.setVimeoId(1234L);
         postRequest.setWeight(300L);
         postRequest.setPlayTime(324234L);
+        postRequest.setThumbnail("test");
 
         Request<PostRequest> request = new Request<>(postRequest);
 
