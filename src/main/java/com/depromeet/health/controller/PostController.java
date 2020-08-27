@@ -1,5 +1,6 @@
 package com.depromeet.health.controller;
 
+import com.depromeet.health.exception.AlreadyEvaluatedUserException;
 import com.depromeet.health.model.Post;
 import com.depromeet.health.model.enums.EvaluateType;
 import com.depromeet.health.model.enums.ExerciseType;
@@ -105,7 +106,7 @@ public class PostController extends AbstractController {
     public Response<PostResponse> evaluatePost(
             @PathVariable("post_id") Long postId,
             @RequestParam("type") EvaluateType evaluateType
-    ) {
+    ) throws AlreadyEvaluatedUserException {
         Post post = postService.updatePostByEvaluateType(postId, evaluateType);
         evaluateService.createEvaluate(post.getUser().getId(), postId);
         PostResponse postResponse = new PostResponse(post, true);
