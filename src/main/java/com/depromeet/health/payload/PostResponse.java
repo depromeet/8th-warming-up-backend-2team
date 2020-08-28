@@ -48,6 +48,12 @@ public class PostResponse {
     @JsonProperty("isEvaluated")
     Boolean isEvaluated;
 
+    @JsonProperty("goodCount")
+    Number goodCount;
+
+    @JsonProperty("badCount")
+    Number badCount;
+
     @JsonProperty("totalEvaluatedCount")
     Number totalEvaluatedCount;
 
@@ -64,6 +70,8 @@ public class PostResponse {
         this.thumbnail = post.getThumbnail();
         this.playTime = post.getPlayTime();
         this.isEvaluated = null;
+        this.goodCount = post.getGoodCount();
+        this.badCount = post.getBadCount();
         this.totalEvaluatedCount = post.getGoodCount() + post.getBadCount();
     }
 
@@ -80,6 +88,8 @@ public class PostResponse {
         this.thumbnail = post.getThumbnail();
         this.playTime = post.getPlayTime();
         this.isEvaluated = isEvaluated;
+        this.goodCount = post.getGoodCount();
+        this.badCount = post.getBadCount();
         this.totalEvaluatedCount = post.getGoodCount() + post.getBadCount();
     }
 
