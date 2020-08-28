@@ -56,7 +56,7 @@ public class PostService {
         return postRepository.findByUserId(userId, pageable).orElse(new ArrayList<>());
     }
 
-    private User readUserByToken(String token) {
+    public User readUserByToken(String token) {
         String userPk = jwtTokenProvider.getUserPk(token);
         return (User) userService.loadUserByUsername(userPk);
     }

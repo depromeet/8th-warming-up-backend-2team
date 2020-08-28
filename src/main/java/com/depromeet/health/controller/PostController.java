@@ -2,6 +2,7 @@ package com.depromeet.health.controller;
 
 import com.depromeet.health.exception.AlreadyEvaluatedUserException;
 import com.depromeet.health.model.Post;
+import com.depromeet.health.model.User;
 import com.depromeet.health.model.enums.EvaluateType;
 import com.depromeet.health.model.enums.ExerciseType;
 import com.depromeet.health.payload.PostRequest;
@@ -94,21 +95,25 @@ public class PostController extends AbstractController {
 
     @GetMapping("post/{post_id}")
     public Response<PostResponse> getPost(
+            @RequestHeader(value = "TOKEN") String token,
             @PathVariable("post_id") Long postId
     ) {
+        User user = postService.readUserByToken(token);
         Post post = postService.readPost(postId);
-        Boolean isEvaluated = evaluateService.isEvaluatePost(post.getUser().getId(), postId);
+        Boolean isEvaluated = evaluateService.isEvaluatePost(user.getId(), postId);
         PostResponse postResponse = new PostResponse(post, isEvaluated);
         return ok(postResponse);
     }
 
     @PatchMapping("post/{post_id}")
     public Response<PostResponse> evaluatePost(
+            @RequestHeader(value = "TOKEN") String token,
             @PathVariable("post_id") Long postId,
             @RequestParam("type") EvaluateType evaluateType
     ) throws AlreadyEvaluatedUserException {
+        User user = postService.readUserByToken(token);
         Post post = postService.updatePostByEvaluateType(postId, evaluateType);
-        evaluateService.createEvaluate(post.getUser().getId(), postId);
+        evaluateService.createEvaluate(user.getId(), postId);
         PostResponse postResponse = new PostResponse(post, true);
         return ok(postResponse);
     }
